@@ -1,0 +1,818 @@
+/* =============================================
+   स्वर्णी पशु आहार - Mobile-First Admin CSS
+   Designed strictly for Mobile: 360px - 430px
+   ============================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body.admin-body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: #F4F7F5;
+  color: var(--dark-text);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ADMIN APP SHELL */
+#admin-app {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  background: #F4F7F5;
+}
+
+.admin-main {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =============================================
+   TOPBAR (Mobile)
+   ============================================= */
+.admin-topbar {
+  background: white;
+  border-bottom: 1px solid #E2E8F0;
+  height: 58px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.admin-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-hamburger {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: var(--soft-green);
+  color: var(--dark-green);
+  border-radius: 10px;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.admin-page-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--dark-green);
+  font-family: var(--font-hindi);
+}
+
+.admin-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-notif-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #E2E8F0;
+  background: white;
+  border-radius: 10px;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.admin-notif-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: #EF4444;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* =============================================
+   DRAWER OVERLAY & SIDEBAR (Mobile Drawer)
+   ============================================= */
+.admin-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+
+.admin-drawer-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.admin-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 290px;
+  max-width: 85vw;
+  background: var(--dark-green);
+  color: white;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 4px 0 24px rgba(0,0,0,0.3);
+}
+
+.admin-sidebar.open {
+  transform: translateX(0);
+}
+
+.admin-sidebar-header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-drawer-logo-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--golden);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.admin-drawer-close {
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: white;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-nav {
+  flex: 1;
+  padding: 12px 0;
+  overflow-y: auto;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  font-family: var(--font-hindi);
+  min-height: 44px;
+  transition: background 0.15s;
+}
+
+.admin-nav-item:hover, .admin-nav-item.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+}
+
+.admin-nav-item.active {
+  border-left: 4px solid var(--golden);
+  color: var(--golden);
+}
+
+.admin-nav-item-icon {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+}
+
+.admin-sidebar-footer {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* =============================================
+   BOTTOM NAVIGATION (Mobile Fixed)
+   ============================================= */
+.admin-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: 66px;
+  background: white;
+  border-top: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 900;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.admin-bottom-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex: 1;
+  height: 100%;
+  color: var(--medium-text);
+  text-decoration: none;
+  font-family: var(--font-hindi);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: color 0.15s;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.admin-bottom-item.active {
+  color: var(--primary-green);
+}
+
+.admin-bottom-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* =============================================
+   ADMIN CONTENT & DASHBOARD
+   ============================================= */
+.admin-content {
+  flex: 1;
+  padding: 16px 14px 84px 14px; /* Essential bottom padding to not overlap bottom nav */
+  width: 100%;
+}
+
+.admin-welcome-section {
+  margin-bottom: 16px;
+}
+
+.admin-welcome-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--dark-green);
+  margin: 0 0 4px;
+  font-family: var(--font-hindi);
+}
+
+.admin-welcome-sub {
+  font-size: 0.9rem;
+  color: var(--medium-text);
+  margin: 0;
+  font-family: var(--font-hindi);
+}
+
+/* 2-COLUMN STATS GRID */
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.admin-stat-card {
+  background: white;
+  border-radius: 14px;
+  padding: 14px 12px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-stat-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.admin-stat-icon {
+  font-size: 1.2rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--soft-green);
+}
+
+.admin-stat-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--medium-text);
+  font-family: var(--font-hindi);
+}
+
+.admin-stat-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--dark-green);
+  line-height: 1.1;
+  margin-top: 4px;
+}
+
+/* QUICK ACTIONS GRID */
+.admin-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.admin-section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--dark-green);
+  font-family: var(--font-hindi);
+  margin: 0;
+}
+
+.admin-quick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.admin-quick-card {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 14px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--dark-text);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  min-height: 56px;
+  transition: transform 0.1s, border-color 0.15s;
+}
+
+.admin-quick-card:active {
+  transform: scale(0.98);
+  border-color: var(--primary-green);
+}
+
+.admin-quick-icon {
+  font-size: 1.5rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--soft-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.admin-quick-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-quick-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--dark-green);
+  font-family: var(--font-hindi);
+}
+
+.admin-quick-sub {
+  font-size: 0.72rem;
+  color: var(--light-text);
+}
+
+/* =============================================
+   MOBILE CARDS: PRODUCTS
+   ============================================= */
+.admin-mobile-card {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.admin-prod-card-top {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.admin-prod-thumb {
+  width: 68px;
+  height: 68px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: var(--soft-green);
+  flex-shrink: 0;
+}
+
+.admin-prod-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-prod-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dark-green);
+  font-family: var(--font-hindi);
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.admin-prod-sub {
+  font-size: 0.8rem;
+  color: var(--light-text);
+  margin-bottom: 4px;
+}
+
+.admin-prod-price {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary-green);
+}
+
+.admin-card-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid #F1F5F9;
+}
+
+.admin-card-actions .btn {
+  flex: 1;
+  min-height: 40px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* =============================================
+   MOBILE CARDS: ORDERS
+   ============================================= */
+.admin-order-card {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.admin-order-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.admin-order-id {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--dark-green);
+}
+
+.admin-order-date {
+  font-size: 0.75rem;
+  color: var(--light-text);
+}
+
+.admin-order-customer {
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.admin-order-items {
+  background: #F8FAFC;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: var(--dark-text);
+}
+
+.admin-order-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid #F1F5F9;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-order-total {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary-green);
+}
+
+/* =============================================
+   MOBILE CARDS: BOOKINGS
+   ============================================= */
+.admin-booking-card {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.admin-booking-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.admin-booking-service {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dark-green);
+  font-family: var(--font-hindi);
+}
+
+.admin-booking-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  margin: 10px 0;
+  font-size: 0.85rem;
+}
+
+/* =============================================
+   BADGES & STATUS
+   ============================================= */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.status-pending { background: #FEF3C7; color: #92400E; }
+.status-confirmed { background: #DCFCE7; color: #166534; }
+.status-preparing { background: #E0E7FF; color: #3730A3; }
+.status-out_for_delivery { background: #DBEAFE; color: #1E40AF; }
+.status-delivered { background: #DCFCE7; color: #166534; }
+.status-completed { background: #DCFCE7; color: #166534; }
+.status-cancelled { background: #FEE2E2; color: #991B1B; }
+
+/* =============================================
+   MOBILE ACTION BAR (Search + Add)
+   ============================================= */
+.admin-action-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.admin-search-box {
+  flex: 1;
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+}
+
+.admin-search-box input {
+  border: none;
+  outline: none;
+  background: none;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+/* =============================================
+   FORMS & MODALS (Mobile)
+   ============================================= */
+.admin-mobile-form {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.admin-mobile-form .form-group {
+  margin-bottom: 12px;
+}
+
+.admin-mobile-form .form-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.admin-mobile-form input,
+.admin-mobile-form select,
+.admin-mobile-form textarea {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+/* Status dropdown selector on cards */
+.admin-status-select {
+  min-height: 38px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  background: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =============================================
+   MOBILE IMAGE PICKER & PREVIEW
+   ============================================= */
+.mobile-image-picker {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.image-picker-card {
+  width: 100%;
+  border: 2px dashed #94A3B8;
+  border-radius: 12px;
+  padding: 22px 14px;
+  text-align: center;
+  cursor: pointer;
+  background: #F8FAFC;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.image-picker-card:hover,
+.image-picker-card:active {
+  border-color: var(--primary-green);
+  background: var(--soft-green);
+}
+
+.image-picker-icon {
+  font-size: 2.2rem;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.image-picker-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--dark-green);
+  margin-bottom: 4px;
+}
+
+.image-picker-subtitle {
+  font-size: 0.8rem;
+  color: var(--medium-text);
+}
+
+.image-picker-preview {
+  width: 100%;
+}
+
+.image-preview-frame {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #E2E8F0;
+  border: 1px solid #CBD5E1;
+}
+
+.image-preview-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.image-action-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.image-action-row .btn {
+  min-height: 42px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-filename {
+  font-size: 0.75rem;
+  color: var(--light-text);
+  margin-top: 6px;
+  text-align: center;
+  word-break: break-all;
+}
+
+.image-picker-error {
+  color: var(--red);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: #FEE2E2;
+  border-radius: 6px;
+  display: none;
+}

@@ -1,0 +1,57 @@
+# Git Ignore — स्वर्णी पशु आहार
+
+# Environment / secrets
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Local SQLite database (dev only, not for production)
+*.db
+*.sqlite
+*.sqlite3
+swarni_data.db
+
+# Local development server (Python mock — NOT for deployment)
+server.py
+server.log
+*.log
+
+# Temporary fix scripts (generated during development)
+fix_*.py
+test_*.py
+db_test.js
+integration_test.js
+qa_results.json
+fix_dynamic_price.py
+fix_guest_tracking.py
+
+# Node
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V7
+.Trashes
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build output (if any)
+dist/
+build/
+.cache/
+
+# Supabase CLI (local dev)
+.supabase/
+
+# Admin setup file (contains credentials reminder — keep private)
+supabase/admin_setup.sql

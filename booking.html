@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>सेवा बुकिंग | स्वर्णी पशु आहार</title>
+  <meta name="description" content="सीड ग्रेडिंग, सोयाबीन प्रोसेसिंग, लहसुन छीलना - ऑनलाइन बुकिंग करें।">
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo"><div class="nav-logo-icon">🌾</div><div class="nav-logo-text"><span class="nav-logo-name hindi">स्वर्णी पशु आहार</span></div></a>
+      <div class="nav-actions">
+        <a href="services.html" class="nav-btn btn-ghost hindi">← सेवाएं</a>
+        
+        
+      </div>
+    </div>
+  </nav>
+  <div class="page-header"><div class="container"><h1 class="page-header-title hindi">📅 सेवा बुकिंग</h1><div class="page-header-breadcrumb"><a href="index.html" class="hindi">होम</a><span>›</span><a href="services.html" class="hindi">सेवाएं</a><span>›</span><span class="hindi">बुकिंग</span></div></div></div>
+  <section class="section">
+    <div class="container">
+      <div style="display:flex; flex-direction:column; gap:var(--space-xl);">
+        <div>
+          <form id="booking-form" onsubmit="submitBooking(event)">
+            <!-- Service & Date Selection -->
+            <div class="admin-panel" style="margin-bottom:var(--space-lg);">
+              <div class="admin-panel-header"><span class="admin-panel-title hindi">⚙️ सेवा चुनें</span></div>
+              <div class="admin-panel-body">
+                <div class="form-group"><label class="form-label hindi">सेवा का प्रकार<span class="required">*</span></label>
+                  <select class="form-control" id="booking-service" onchange="onServiceChange()" required><option value="">-- सेवा चुनें --</option></select>
+                </div>
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label hindi">मात्रा<span class="required">*</span></label><input class="form-control" type="number" id="booking-quantity" placeholder="जैसे 100" min="1" required oninput="calculateBookingTotal()"></div>
+                  <div class="form-group"><label class="form-label hindi">इकाई</label>
+                    <select class="form-control" id="booking-unit">
+                      <option value="kg">किलोग्राम (kg)</option>
+                      <option value="quintal">क्विंटल</option>
+                      <option value="bag">बोरी</option>
+                      <option value="ton">टन</option>
+                    </select>
+                  </div>
+                </div>
+                <div id="booking-total-display" style="margin-top:12px; padding:12px; background:var(--golden-light); border-radius:6px; font-weight:bold; color:var(--dark-green); display:none; font-size:1.1rem;" class="hindi">
+                  अनुमानित कुल मूल्य: ₹0
+                </div>
+              </div>
+            </div>
+            <!-- Date & Slot Selection -->
+            <div class="admin-panel" style="margin-bottom:var(--space-lg);">
+              <div class="admin-panel-header"><span class="admin-panel-title hindi">📅 तारीख और समय चुनें</span></div>
+              <div class="admin-panel-body">
+                <div class="form-group"><label class="form-label hindi">बुकिंग तारीख<span class="required">*</span></label><input class="form-control" type="date" id="booking-date" required onchange="onDateChange()"></div>
+                <div class="form-group">
+                  <label class="form-label hindi">उपलब्ध समय स्लॉट<span class="required">*</span></label>
+                  <div id="slots-container" style="padding:var(--space-md);background:var(--off-white);border-radius:var(--radius-md);border:1px solid var(--border);">
+                    <p class="hindi text-muted">पहले सेवा और तारीख चुनें।</p>
+                  </div>
+                  <div id="selected-slot-info" class="hidden"></div>
+                </div>
+              </div>
+            </div>
+            <!-- Location -->
+            <div class="admin-panel" style="margin-bottom:var(--space-lg);">
+              <div class="admin-panel-header"><span class="admin-panel-title hindi">📍 स्थान जानकारी</span></div>
+              <div class="admin-panel-body">
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label hindi">गाँव / शहर<span class="required">*</span></label><input class="form-control" id="booking-village" placeholder="गाँव का नाम" required></div>
+                  <div class="form-group"><label class="form-label hindi">लैंडमार्क</label><input class="form-control" id="booking-landmark" placeholder="पास का स्थान"></div>
+                </div>
+                <div class="form-group"><label class="form-label hindi">पूरा पता / निर्देश</label><input class="form-control" id="booking-location" placeholder="घर/खेत का पता"></div>
+              </div>
+            </div>
+            <!-- Customer Info -->
+            <div class="admin-panel" style="margin-bottom:var(--space-lg);">
+              <div class="admin-panel-header"><span class="admin-panel-title hindi">👤 आपकी जानकारी</span></div>
+              <div class="admin-panel-body">
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label hindi">पूरा नाम<span class="required">*</span></label><input class="form-control" id="booking-name" placeholder="आपका नाम" required></div>
+                  <div class="form-group"><label class="form-label hindi">मोबाइल<span class="required">*</span></label><input class="form-control" id="booking-phone" type="tel" placeholder="10 अंक" pattern="[0-9]{10}" required></div>
+                </div>
+                <div class="form-group"><label class="form-label">Email (optional)</label><input class="form-control" id="booking-email" type="email"></div>
+              </div>
+            </div>
+            <!-- Notes -->
+            <div class="admin-panel" style="margin-bottom:var(--space-lg);">
+              <div class="admin-panel-header"><span class="admin-panel-title hindi">📝 अतिरिक्त जानकारी</span></div>
+              <div class="admin-panel-body"><textarea class="form-control" id="booking-notes" rows="2" placeholder="कोई विशेष आवश्यकता या निर्देश..."></textarea></div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-xl btn-full hindi" id="submit-booking">📅 बुकिंग अनुरोध भेजें</button>
+            <p class="hindi text-muted" style="text-align:center;margin-top:12px;font-size:0.85rem;">* बुकिंग की पुष्टि फोन/WhatsApp से की जाएगी।</p>
+          </form>
+        </div>
+        <!-- Info Panel -->
+        <div>
+          <div class="card" style="position:sticky;top:88px;border:2px solid var(--golden);border-radius:var(--radius-lg);overflow:hidden;">
+            <div style="background:var(--golden);padding:var(--space-md);"><h3 class="hindi" style="color:var(--dark-green);margin:0;">ℹ️ बुकिंग जानकारी</h3></div>
+            <div class="card-body">
+              <p class="hindi" style="margin-bottom:16px;">बुकिंग करने के बाद हम आपसे <strong>फोन/WhatsApp पर संपर्क करेंगे</strong> और सेवा की पुष्टि करेंगे।</p>
+              <div style="margin-bottom:16px;">
+                <div style="font-weight:700;margin-bottom:8px;" class="hindi">📞 संपर्क करें:</div>
+                <a href="tel:8120860801" class="btn btn-primary btn-sm btn-full hindi" style="margin-bottom:8px;">📞 8120860801</a>
+                <a href="https://wa.me/918120860801" class="btn btn-whatsapp btn-sm btn-full" target="_blank">💬 WhatsApp</a>
+              </div>
+              <div style="background:var(--soft-green);padding:var(--space-md);border-radius:var(--radius-md);">
+                <div style="font-weight:700;color:var(--dark-green);margin-bottom:8px;" class="hindi">🕐 सेवा समय:</div>
+                <p class="hindi" style="font-size:0.85rem;margin:0;">सोमवार से शनिवार<br>सुबह 8:00 - शाम 8:00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script><script src="js/supabase-config.js"></script>
+  <script src="js/supabase.js"></script><script src="js/auth.js"></script><script src="js/ui.js"></script><script src="js/cart.js"></script><script src="js/whatsapp.js"></script><script src="js/booking.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { initNavbar(); initBookingPage(); });</script>
+</body>
+</html>

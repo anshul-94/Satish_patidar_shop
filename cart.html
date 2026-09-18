@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>मेरा सामान | स्वर्णी पशु आहार</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo"><div class="nav-logo-icon">🌾</div><div class="nav-logo-text"><span class="nav-logo-name hindi">स्वर्णी पशु आहार</span></div></a>
+      <div class="nav-actions">
+        <a href="products.html" class="nav-btn btn-secondary hindi" style="text-decoration:none;">← खरीदारी जारी रखें</a>
+        
+        
+      </div>
+      <button class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="page-header"><div class="container"><h1 class="page-header-title hindi">🛒 मेरा सामान</h1><div class="page-header-breadcrumb"><a href="index.html" class="hindi">होम</a><span>›</span><span class="hindi">सामान</span></div></div></div>
+  <section class="section">
+    <div class="container">
+      <!-- Empty State -->
+      <div id="cart-empty" class="empty-state hidden">
+        <div class="empty-state-icon">🛒</div>
+        <div class="empty-state-title hindi">कार्ट खाली है</div>
+        <p class="empty-state-message hindi">अभी कुछ नहीं डाला। पहले सामान चुनें!</p>
+        <a href="products.html" class="btn btn-primary hindi">🐄 सामान देखें</a>
+      </div>
+      <!-- Cart Content -->
+      <div id="cart-summary" class="hidden">
+        <div style="display:flex;flex-direction:column;gap:var(--space-xl);align-items:start;">
+          <div style="width:100%;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-md);">
+              <h2 class="hindi" style="color:var(--dark-green);">✅ कार्ट में है <span id="cart-item-count" style="font-size:1rem;color:var(--light-text);"></span></h2>
+              <button onclick="showConfirm('सभी आइटम हटाएं?', () => { clearCart(); renderCartPage(); })" class="btn btn-sm btn-ghost hindi" style="color:var(--red);">🗑 सभी हटाएं</button>
+            </div>
+            <div id="cart-items"></div>
+          </div>
+          <div>
+            <div class="order-summary">
+              <div class="order-summary-title hindi">आपका ओर्डर</div>
+              <div class="order-summary-row"><span class="hindi">सामान की कीमत</span><span id="cart-subtotal">₹0</span></div>
+              <div class="order-summary-row"><span class="hindi">घर पहुँचाने का खर्च</span><span id="cart-delivery">₹50</span></div>
+              <div class="order-summary-row total"><span class="hindi">कुल कीमत</span><span id="cart-total">₹0</span></div>
+              <div style="margin-top:var(--space-md);">
+                <div class="delivery-badge" style="margin-bottom:var(--space-sm);">🚚 <span class="hindi">होम डिलीवरी उपलब्ध</span></div>
+                <a href="checkout.html" onclick="if(!isAuthenticated()){event.preventDefault();window.location.href='login.html?redirect=checkout.html';}" class="btn btn-primary btn-full btn-lg hindi" style="margin-top:8px;">ओर्डर करें →</a>
+                <a href="products.html" class="btn btn-ghost btn-full hindi" style="margin-top:8px;">← और सामान चुनें</a>
+              </div>
+              <div class="divider"></div>
+              <div style="display:flex;gap:8px;justify-content:center;">
+                <a href="https://wa.me/918120860801" class="btn btn-sm btn-whatsapp hindi" target="_blank">💬 WhatsApp पर ऑर्डर</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <nav class="bottom-nav"><div class="bottom-nav-items"><a href="index.html" class="bottom-nav-item"><span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label hindi">होम</span></a><a href="products.html" class="bottom-nav-item"><span class="bottom-nav-icon">🐄</span><span class="bottom-nav-label hindi">उत्पाद</span></a><a href="cart.html" class="bottom-nav-item active"><span class="bottom-nav-icon">🛒</span><span class="bottom-nav-label hindi">कार्ट</span></a><a href="booking.html" class="bottom-nav-item"><span class="bottom-nav-icon">⚙️</span><span class="bottom-nav-label hindi">बुकिंग</span></a>
+      <a href="https://wa.me/918120860801" class="bottom-nav-item"><span class="bottom-nav-icon" style="color:#25D366;">💬</span><span class="bottom-nav-label hindi">WA</span></a>
+      <a href="tel:8120860801" class="bottom-nav-item"><span class="bottom-nav-icon" style="color:var(--dark-green);">📞</span><span class="bottom-nav-label hindi">कॉल</span></a></div></nav>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { initNavbar(); renderCartPage(); });</script>
+</body>
+</html>

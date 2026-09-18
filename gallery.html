@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>गैलरी | स्वर्णी पशु आहार</title>
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo"><div class="nav-logo-icon">🌾</div><div class="nav-logo-text"><span class="nav-logo-name hindi">स्वर्णी पशु आहार</span></div></a>
+      <div class="nav-menu"><a href="index.html" class="nav-link hindi">होम</a><a href="products.html" class="nav-link hindi">उत्पाद</a><a href="services.html" class="nav-link hindi">सेवाएं</a><a href="gallery.html" class="nav-link hindi active">गैलरी</a><a href="contact.html" class="nav-link hindi">संपर्क</a></div>
+      <div class="nav-actions"><a href="cart.html" class="nav-btn btn-cart">🛒<span class="cart-badge" style="display:none;">0</span></a></div>
+      <button class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="page-header"><div class="container"><h1 class="page-header-title hindi">📷 गैलरी</h1><div class="page-header-breadcrumb"><a href="index.html" class="hindi">होम</a><span>›</span><span class="hindi">गैलरी</span></div></div></div>
+  <section class="section">
+    <div class="container">
+      <!-- Filter Tabs -->
+      <div class="filter-tabs" style="margin-bottom:var(--space-xl);" id="gallery-filters">
+        <button class="filter-tab active hindi" onclick="filterGallery('')" data-cat="">सभी</button>
+        <button class="filter-tab hindi" onclick="filterGallery('shop')" data-cat="shop">🏪 दुकान</button>
+        <button class="filter-tab hindi" onclick="filterGallery('animal_feed')" data-cat="animal_feed">🐄 पशु आहार</button>
+        <button class="filter-tab hindi" onclick="filterGallery('machines')" data-cat="machines">⚙️ मशीनें</button>
+        <button class="filter-tab hindi" onclick="filterGallery('seed_grading')" data-cat="seed_grading">🌾 सीड ग्रेडिंग</button>
+        <button class="filter-tab hindi" onclick="filterGallery('agriculture')" data-cat="agriculture">🌿 कृषि</button>
+      </div>
+      <!-- Gallery Grid -->
+      <div id="gallery-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-md);">
+        <!-- Default: Show product images -->
+        <div class="gallery-item"><img src="assets/images/product-super-feed.jpg" alt="सुपर पशु आहार" style="width:100%;height:220px;object-fit:cover;border-radius:var(--radius-lg);"><div class="gallery-caption hindi">स्वर्णी सुपर पशु आहार</div></div>
+        <div class="gallery-item"><img src="assets/images/product-silver-feed.jpg" alt="सिल्वर पशु आहार" style="width:100%;height:220px;object-fit:cover;border-radius:var(--radius-lg);"><div class="gallery-caption hindi">स्वर्णी सिल्वर पशु आहार</div></div>
+        <div class="gallery-item"><img src="assets/images/product-large-feed.jpg" alt="पशु आहार" style="width:100%;height:220px;object-fit:cover;border-radius:var(--radius-lg);"><div class="gallery-caption hindi">बड़े पैक पशु आहार</div></div>
+        <div class="gallery-item"><img src="assets/images/service-seed-grading.jpg" alt="सीड ग्रेडिंग" style="width:100%;height:220px;object-fit:cover;border-radius:var(--radius-lg);"><div class="gallery-caption hindi">सीड ग्रेडिंग मशीन</div></div>
+        <div class="gallery-item"><img src="assets/images/service-soybean.jpg" alt="सोयाबीन प्रोसेसिंग" style="width:100%;height:220px;object-fit:cover;border-radius:var(--radius-lg);"><div class="gallery-caption hindi">सोयाबीन प्रोसेसिंग</div></div>
+        <div class="gallery-item"><img src="assets/images/service-garlic.jpg" alt="लहसुन छीलना" style="width:100%;height:220px;object-fit:cover;border-radius:var(--radius-lg);"><div class="gallery-caption hindi">लहसुन छीलने की सेवा</div></div>
+      </div>
+    </div>
+  </section>
+  <style>
+    .gallery-item { cursor: pointer; }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-item img { transition: transform 0.3s; border-radius: var(--radius-lg); }
+    .gallery-caption { padding: 8px 0 0; font-weight: 600; font-size: 0.9rem; color: var(--dark-text); }
+  </style>
+  <nav class="bottom-nav"><div class="bottom-nav-items"><a href="index.html" class="bottom-nav-item"><span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label hindi">होम</span></a><a href="products.html" class="bottom-nav-item"><span class="bottom-nav-icon">🐄</span><span class="bottom-nav-label hindi">उत्पाद</span></a><a href="cart.html" class="bottom-nav-item"><span class="bottom-nav-icon">🛒</span><span class="bottom-nav-label hindi">कार्ट</span></a><a href="booking.html" class="bottom-nav-item"><span class="bottom-nav-icon">⚙️</span><span class="bottom-nav-label hindi">बुकिंग</span></a>
+      <a href="https://wa.me/918120860801" class="bottom-nav-item"><span class="bottom-nav-icon" style="color:#25D366;">💬</span><span class="bottom-nav-label hindi">WA</span></a>
+      <a href="tel:8120860801" class="bottom-nav-item"><span class="bottom-nav-icon" style="color:var(--dark-green);">📞</span><span class="bottom-nav-label hindi">कॉल</span></a></div></nav>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script><script src="js/supabase-config.js"></script>
+  <script src="js/supabase.js"></script><script src="js/auth.js"></script><script src="js/ui.js"></script><script src="js/cart.js"></script>
+  <script>
+    let _allGallery = [];
+    document.addEventListener('DOMContentLoaded', async () => {
+      initNavbar();
+      try {
+        const gallery = await getGallery();
+        if (gallery.length > 0) {
+          _allGallery = gallery;
+          renderGallery(gallery);
+        }
+      } catch(e) { /* Use default static gallery */ }
+    });
+    function renderGallery(items) {
+      const grid = document.getElementById('gallery-grid');
+      grid.innerHTML = items.map(item => `
+        <div class="gallery-item fade-in"><img src="${escapeHtml(item.image_url)}" alt="${escapeHtml(item.title_hi || item.title || '')}" style="width:100%;height:220px;object-fit:cover;border-radius:var(--radius-lg);" onerror="this.style.background='var(--soft-green)'"><div class="gallery-caption hindi">${escapeHtml(item.title_hi || item.title || '')}</div></div>
+      `).join('');
+    }
+    function filterGallery(cat) {
+      document.querySelectorAll('[data-cat]').forEach(el => el.classList.toggle('active', el.dataset.cat === cat));
+      if (_allGallery.length > 0) {
+        const filtered = cat ? _allGallery.filter(g => g.category === cat) : _allGallery;
+        renderGallery(filtered);
+      }
+    }
+  </script>
+</body>
+</html>

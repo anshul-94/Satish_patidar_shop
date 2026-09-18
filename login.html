@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>लॉगिन करें | स्वर्णी पशु आहार</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-main, sans-serif);
+      overflow-x: hidden;
+    }
+    .auth-wrapper {
+      width: 100%;
+      max-width: 420px;
+      padding: 20px 16px;
+      margin: 0 auto;
+    }
+    .auth-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 32px 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border);
+      width: 100%;
+    }
+    .auth-icon-badge {
+      width: 64px;
+      height: 64px;
+      background: var(--soft-green);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 14px;
+    }
+    .auth-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark-green);
+      margin: 0 0 6px;
+      text-align: center;
+    }
+    .auth-subtitle {
+      font-size: 0.95rem;
+      color: var(--medium-text);
+      margin: 0 0 24px;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--dark-green);
+      margin-bottom: 8px;
+    }
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .auth-input {
+      width: 100%;
+      height: 52px;
+      padding: 12px 16px;
+      font-size: 1.05rem;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: #FAFAFA;
+      transition: all 0.2s ease;
+      color: var(--dark-green);
+    }
+    .auth-input:focus {
+      outline: none;
+      border-color: var(--primary-green);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+    }
+    .password-toggle-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--light-text);
+      padding: 6px;
+    }
+    .auth-btn-submit {
+      width: 100%;
+      height: 52px;
+      background: var(--primary-green);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+      box-shadow: 0 4px 12px rgba(45, 106, 79, 0.25);
+      transition: transform 0.1s ease, background 0.2s ease;
+    }
+    .auth-btn-submit:active {
+      transform: scale(0.98);
+    }
+    .auth-btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .auth-error-box {
+      display: none;
+      background: #FEE2E2;
+      border: 1px solid #FCA5A5;
+      color: #B91C1C;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .auth-switch {
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+    .auth-switch p {
+      margin: 0 0 8px;
+      color: var(--medium-text);
+      font-size: 0.95rem;
+    }
+    .auth-switch a {
+      color: var(--primary-green);
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1rem;
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: var(--soft-green);
+    }
+    .back-home-link {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: var(--medium-text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-icon-badge">👤</div>
+      <h1 class="auth-title hindi">अपने खाते में जाएं</h1>
+      <p class="auth-subtitle hindi">अपना मोबाइल नंबर और पासवर्ड डालें</p>
+
+      <div id="auth-error-box" class="auth-error-box hindi"></div>
+
+      <form id="login-form" onsubmit="handleLoginSubmit(event)" novalidate>
+        <div class="form-group">
+          <label class="form-label hindi" for="login-identifier">📱 अपना मोबाइल नंबर</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="login-identifier"
+              class="auth-input"
+              placeholder="10 अंकों का मोबाइल नंबर"
+              autocomplete="username"
+              autofocus
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label hindi" for="login-password">🔒 पासवर्ड</label>
+          <div class="input-wrapper">
+            <input
+              type="password"
+              id="login-password"
+              class="auth-input"
+              placeholder="पासवर्ड"
+              autocomplete="current-password"
+              required
+            >
+            <button
+              type="button"
+              class="password-toggle-btn"
+              onclick="togglePasswordVisibility('login-password', this)"
+              aria-label="पासवर्ड देखें या छिपाएं"
+            >👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" class="auth-btn-submit hindi" id="login-submit-btn">
+          🔐 लॉगिन करें
+        </button>
+      </form>
+
+      <div class="auth-switch">
+        <p class="hindi">नये हैं? खाता नहीं है?</p>
+        <a id="signup-link" href="signup.html" class="hindi">🌱 नया खाता बनाएं</a>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-home-link hindi">← वापस होम जाएं</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script>
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+
+    function showError(msg) {
+      const errBox = document.getElementById('auth-error-box');
+      if (errBox) {
+        errBox.textContent = msg;
+        errBox.style.display = 'block';
+      }
+    }
+
+    function clearError() {
+      const errBox = document.getElementById('auth-error-box');
+      if (errBox) {
+        errBox.textContent = '';
+        errBox.style.display = 'none';
+      }
+    }
+
+    async function handleLoginSubmit(event) {
+      event.preventDefault();
+      clearError();
+
+      const identifierInput = document.getElementById('login-identifier');
+      const passwordInput = document.getElementById('login-password');
+      const submitBtn = document.getElementById('login-submit-btn');
+
+      const identifier = identifierInput.value.trim();
+      const password = passwordInput.value;
+
+      // Validation
+      if (!identifier) {
+        showError('मोबाइल नंबर डालें');
+        identifierInput.focus();
+        return;
+      }
+
+      // Check format: either admin identifier or 10-digit mobile number
+      if (identifier !== 'adminuser85') {
+        if (!/^\d{10}$/.test(identifier)) {
+          showError('सही 10 अंकों का मोबाइल नंबर डालें');
+          identifierInput.focus();
+          return;
+        }
+      }
+
+      if (!password) {
+        showError('पासवर्ड डालें');
+        passwordInput.focus();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '⏳ लॉगिन हो रहा है...';
+
+      try {
+        const user = await login(identifier, password);
+        showToast('लॉगिन हो गया!', 'success');
+
+        const params = new URLSearchParams(window.location.search);
+        const redirectParam = params.get('redirect');
+
+        // Role based redirection
+        if (isAdmin() || (user && (user.role === 'admin' || user.mobile === 'adminuser85'))) {
+          window.location.href = 'admin.html';
+        } else {
+          if (redirectParam && !redirectParam.includes('admin') && !redirectParam.includes('login')) {
+            window.location.href = redirectParam;
+          } else {
+            window.location.href = 'index.html';
+          }
+        }
+      } catch(err) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '🔐 लॉगिन करें';
+        showError(err.message || 'मोबाइल नंबर या पासवर्ड गलत है');
+      }
+    }
+
+    // Preserve redirect param on signup link
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const redirectParam = params.get('redirect');
+      if (redirectParam) {
+        const signupLink = document.getElementById('signup-link');
+        if (signupLink) {
+          signupLink.href = `signup.html?redirect=${encodeURIComponent(redirectParam)}`;
+        }
+      }
+
+      // If already logged in, redirect appropriately
+      if (isAuthenticated()) {
+        if (isAdmin()) {
+          window.location.href = 'admin.html';
+        } else if (redirectParam) {
+          window.location.href = redirectParam;
+        } else {
+          window.location.href = 'index.html';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

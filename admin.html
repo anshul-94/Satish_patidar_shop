@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | स्वर्णी पशु आहार</title>
+  <meta name="robots" content="noindex, nofollow">
+  <script>
+    (function() {
+      try {
+        var raw = localStorage.getItem('swarni_user');
+        var u = raw ? JSON.parse(raw) : null;
+        if (!u || u.role !== 'admin') {
+          window.location.replace('login.html?redirect=admin.html');
+        }
+      } catch(e) {
+        window.location.replace('login.html?redirect=admin.html');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="admin-body">
+  <div id="admin-app" style="min-height:100vh;">
+    <div class="admin-main">
+      <div class="admin-topbar">
+        <div class="admin-topbar-left">
+          <button class="admin-hamburger" aria-label="Menu" disabled>☰</button>
+          <div class="admin-page-brand">
+            <span>🌾</span> <span>स्वर्णी Admin</span>
+          </div>
+        </div>
+      </div>
+      <div class="admin-content" style="padding:24px 16px;text-align:center;">
+        <p class="hindi" style="color:var(--dark-green);font-weight:600;">डैशबोर्ड तैयार किया जा रहा है...</p>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/image-upload.js"></script>
+  <script src="js/admin-products.js"></script>
+  <script src="js/admin-services.js"></script>
+  <script src="js/admin-orders.js"></script>
+  <script src="js/admin-bookings.js"></script>
+  <script src="js/admin-slots.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { initAdminPage(); });</script>
+</body>
+</html>

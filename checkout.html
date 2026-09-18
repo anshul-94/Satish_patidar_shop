@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ओर्डर करें | स्वर्णी पशु आहार</title>
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <nav class="navbar"><div class="nav-container"><a href="index.html" class="nav-logo"><div class="nav-logo-icon">🌾</div><div class="nav-logo-text"><span class="nav-logo-name hindi">स्वर्णी पशु आहार</span></div></a><div class="nav-actions"><a href="cart.html" class="nav-btn btn-ghost hindi">← कार्ट</a></div></div></nav>
+  <div class="page-header"><div class="container"><h1 class="page-header-title hindi">📦 ओर्डर करें</h1><div class="page-header-breadcrumb"><a href="index.html" class="hindi">होम</a><span>›</span><a href="cart.html" class="hindi">सामान</a><span>›</span><span class="hindi">ओर्डर</span></div></div></div>
+  <section class="section">
+    <div class="container">
+      <div style="display:flex;flex-direction:column;gap:var(--space-xl);align-items:start;width:100%;">
+        <div>
+          <form id="checkout-form" onsubmit="submitOrder(event)">
+            <!-- Customer Info -->
+            <div class="admin-panel" style="margin-bottom:var(--space-lg);">
+              <div class="admin-panel-header"><span class="admin-panel-title hindi">👤 आपकी जानकारी</span></div>
+              <div class="admin-panel-body">
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label hindi">पूरा नाम<span class="required">*</span></label><input id="checkout-name" class="form-control" placeholder="आपका पूरा नाम" required></div>
+                  <div class="form-group"><label class="form-label hindi">मोबाइल नंबर<span class="required">*</span></label><input id="checkout-phone" class="form-control" type="tel" placeholder="10 अंक" pattern="[0-9]{10}" required></div>
+                </div>
+                <div class="form-group"><label class="form-label">Email (optional)</label><input id="checkout-email" class="form-control" type="email" placeholder="email@example.com"></div>
+              </div>
+            </div>
+            <!-- Delivery Address -->
+            <div class="admin-panel" style="margin-bottom:var(--space-lg);">
+              <div class="admin-panel-header"><span class="admin-panel-title hindi">📍 डिलीवरी पता</span></div>
+              <div class="admin-panel-body">
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label hindi">गाँव / शहर<span class="required">*</span></label><input id="checkout-village" class="form-control" placeholder="गाँव/शहर का नाम" required></div>
+                  <div class="form-group"><label class="form-label hindi">क्षेत्र / मोहल्ला</label><input id="checkout-area" class="form-control" placeholder="क्षेत्र का नाम"></div>
+                </div>
+                <div class="form-group"><label class="form-label hindi">लैंडमार्क</label><input id="checkout-landmark" class="form-control" placeholder="पास का पहचान स्थान"></div>
+                <div class="form-group"><label class="form-label hindi">पूरा पता<span class="required">*</span></label><textarea id="checkout-address" class="form-control" rows="3" placeholder="घर नंबर, गली, मोहल्ला..." required></textarea></div>
+                <div class="form-group"><label class="form-label">पिनकोड</label><input id="checkout-pincode" class="form-control" placeholder="000000" maxlength="6"></div>
+              </div>
+            </div>
+            <!-- Payment -->
+            <div class="admin-panel" style="margin-bottom:var(--space-lg);">
+              <div class="admin-panel-header"><span class="admin-panel-title hindi">💳 पैसे कैसे देंगे?</span></div>
+              <div class="admin-panel-body">
+                <label style="display:flex;align-items:center;gap:12px;padding:16px;border:2px solid var(--primary-green);border-radius:var(--radius-md);cursor:pointer;background:var(--soft-green);">
+                  <input type="radio" name="payment" value="cod" checked>
+                  <div><div style="font-weight:700;" class="hindi">💵 सामान आने पर नगद दें</div><div style="font-size:0.8rem;color:var(--medium-text);" class="hindi">डिलीवरी पर पैसे दें</div></div>
+                </label>
+                <div style="margin-top:var(--space-md);padding:var(--space-md);background:var(--golden-light);border-radius:var(--radius-md);border:1px solid var(--golden);">
+                  <p class="hindi" style="color:#92400E;font-size:0.85rem;font-weight:600;">💬 WhatsApp पर भी ऑर्डर कर सकते हैं: <a href="https://wa.me/918120860801" target="_blank" style="color:var(--primary-green);">8120860801</a></p>
+                </div>
+              </div>
+            </div>
+            <!-- Notes -->
+            <div class="admin-panel" style="margin-bottom:var(--space-lg);">
+              <div class="admin-panel-header"><span class="admin-panel-title hindi">📝 कोई खास बात (जरूरी नहीं)</span></div>
+              <div class="admin-panel-body"><textarea id="checkout-notes" class="form-control" rows="2" placeholder="कोई खास बात हो तो यहाँ लिखें..."></textarea></div>
+            </div>
+            
+        <!-- Order Summary moved into form -->
+        <div style="width:100%;margin-bottom:var(--space-lg);">
+          <div class="order-summary">
+            <div class="order-summary-title hindi">आपका ओर्डर</div>
+            <div id="checkout-items" style="max-height:300px;overflow-y:auto;margin-bottom:var(--space-md);"></div>
+            <div class="order-summary-row"><span class="hindi">सामान की कीमत</span><span id="checkout-subtotal"></span></div>
+            <div class="order-summary-row"><span class="hindi">घर पहुँचाने का खर्च</span><span id="checkout-delivery">₹50</span></div>
+            <div class="order-summary-row total"><span class="hindi">कुल कीमत</span><span id="checkout-total"></span></div>
+            <div style="background:var(--soft-green);border-radius:var(--radius-md);padding:var(--space-sm) var(--space-md);margin-top:var(--space-md);">
+              <p class="hindi" style="font-size:0.8rem;color:var(--primary-green);">✅ सभी मूल्य GST सहित हैं।</p>
+            </div>
+          </div>
+        </div>
+
+            <button type="submit" class="btn btn-primary btn-xl btn-full hindi" id="place-order-btn">✅ ओर्डर करें</button>
+          </form>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script><script src="js/supabase-config.js"></script>
+  <script src="js/supabase.js"></script><script src="js/auth.js"></script><script src="js/ui.js"></script><script src="js/cart.js"></script><script src="js/whatsapp.js"></script><script src="js/checkout.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { initNavbar(); initCheckoutPage(); });</script>
+</body>
+</html>

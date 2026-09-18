@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>नया खाता बनाएं | स्वर्णी पशु आहार</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-main, sans-serif);
+      overflow-x: hidden;
+    }
+    .auth-wrapper {
+      width: 100%;
+      max-width: 420px;
+      padding: 20px 16px;
+      margin: 0 auto;
+    }
+    .auth-card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 32px 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border);
+      width: 100%;
+    }
+    .auth-icon-badge {
+      width: 64px;
+      height: 64px;
+      background: var(--soft-green);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 14px;
+    }
+    .auth-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark-green);
+      margin: 0 0 6px;
+      text-align: center;
+    }
+    .auth-subtitle {
+      font-size: 0.95rem;
+      color: var(--medium-text);
+      margin: 0 0 24px;
+      text-align: center;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--dark-green);
+      margin-bottom: 8px;
+    }
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .auth-input {
+      width: 100%;
+      height: 52px;
+      padding: 12px 16px;
+      font-size: 1.05rem;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: #FAFAFA;
+      transition: all 0.2s ease;
+      color: var(--dark-green);
+    }
+    .auth-input:focus {
+      outline: none;
+      border-color: var(--primary-green);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+    }
+    .password-toggle-btn {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--light-text);
+      padding: 6px;
+    }
+    .auth-btn-submit {
+      width: 100%;
+      height: 52px;
+      background: var(--primary-green);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+      box-shadow: 0 4px 12px rgba(45, 106, 79, 0.25);
+      transition: transform 0.1s ease, background 0.2s ease;
+    }
+    .auth-btn-submit:active {
+      transform: scale(0.98);
+    }
+    .auth-btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .auth-error-box {
+      display: none;
+      background: #FEE2E2;
+      border: 1px solid #FCA5A5;
+      color: #B91C1C;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .auth-success-box {
+      display: none;
+      background: #DCFCE7;
+      border: 1px solid #86EFAC;
+      color: #166534;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .auth-switch {
+      text-align: center;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+    .auth-switch p {
+      margin: 0 0 8px;
+      color: var(--medium-text);
+      font-size: 0.95rem;
+    }
+    .auth-switch a {
+      color: var(--primary-green);
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1rem;
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: var(--soft-green);
+    }
+    .back-home-link {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: var(--medium-text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-icon-badge">🌾</div>
+      <h1 class="auth-title hindi">नया खाता बनाएं</h1>
+      <p class="auth-subtitle hindi">मोबाइल नंबर से रजिस्टर करें</p>
+
+      <div id="auth-error-box" class="auth-error-box hindi"></div>
+      <div id="auth-success-box" class="auth-success-box hindi"></div>
+
+      <form id="signup-form" onsubmit="handleSignupSubmit(event)" novalidate>
+        <div class="form-group">
+          <label class="form-label hindi" for="signup-mobile">📱 मोबाइल नंबर</label>
+          <div class="input-wrapper">
+            <input
+              type="tel"
+              id="signup-mobile"
+              class="auth-input"
+              placeholder="10 अंकों का मोबाइल नंबर"
+              maxlength="10"
+              inputmode="numeric"
+              autocomplete="tel"
+              autofocus
+              required
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label hindi" for="signup-password">🔒 पासवर्ड</label>
+          <div class="input-wrapper">
+            <input
+              type="password"
+              id="signup-password"
+              class="auth-input"
+              placeholder="पासवर्ड"
+              autocomplete="new-password"
+              required
+            >
+            <button
+              type="button"
+              class="password-toggle-btn"
+              onclick="togglePasswordVisibility('signup-password', this)"
+              aria-label="पासवर्ड देखें या छिपाएं"
+            >👁️</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label hindi" for="signup-confirm-password">🔒 पासवर्ड दोबारा डालें</label>
+          <div class="input-wrapper">
+            <input
+              type="password"
+              id="signup-confirm-password"
+              class="auth-input"
+              placeholder="पासवर्ड दोबारा डालें"
+              autocomplete="new-password"
+              required
+            >
+            <button
+              type="button"
+              class="password-toggle-btn"
+              onclick="togglePasswordVisibility('signup-confirm-password', this)"
+              aria-label="पासवर्ड देखें या छिपाएं"
+            >👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" class="auth-btn-submit hindi" id="signup-submit-btn">
+          ✅ खाता बनाएं
+        </button>
+      </form>
+
+      <div class="auth-switch">
+        <p class="hindi">पहले से खाता है?</p>
+        <a id="login-link" href="login.html" class="hindi">🔐 लॉगिन करें</a>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-home-link hindi">← वापस होम जाएं</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script>
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+
+    function showError(msg, showLoginBtn = false) {
+      const errBox = document.getElementById('auth-error-box');
+      const succBox = document.getElementById('auth-success-box');
+      if (succBox) succBox.style.display = 'none';
+
+      if (errBox) {
+        if (showLoginBtn) {
+          const params = new URLSearchParams(window.location.search);
+          const redirectParam = params.get('redirect');
+          const loginUrl = redirectParam ? `login.html?redirect=${encodeURIComponent(redirectParam)}` : 'login.html';
+          errBox.innerHTML = `
+            <div>${escapeHtml(msg)}</div>
+            <div style="margin-top:10px;">
+              <a href="${loginUrl}" style="display:inline-block;background:#B91C1C;color:#FFFFFF;padding:6px 14px;border-radius:6px;font-size:0.9rem;text-decoration:none;font-weight:700;">🔐 लॉगिन करें</a>
+            </div>
+          `;
+        } else {
+          errBox.textContent = msg;
+        }
+        errBox.style.display = 'block';
+      }
+    }
+
+    function showSuccess(msg) {
+      const errBox = document.getElementById('auth-error-box');
+      const succBox = document.getElementById('auth-success-box');
+      if (errBox) errBox.style.display = 'none';
+
+      if (succBox) {
+        succBox.textContent = msg;
+        succBox.style.display = 'block';
+      }
+    }
+
+    function clearMessages() {
+      const errBox = document.getElementById('auth-error-box');
+      const succBox = document.getElementById('auth-success-box');
+      if (errBox) { errBox.textContent = ''; errBox.style.display = 'none'; }
+      if (succBox) { succBox.textContent = ''; succBox.style.display = 'none'; }
+    }
+
+    async function handleSignupSubmit(event) {
+      event.preventDefault();
+      clearMessages();
+
+      const mobileInput = document.getElementById('signup-mobile');
+      const passwordInput = document.getElementById('signup-password');
+      const confirmInput = document.getElementById('signup-confirm-password');
+      const submitBtn = document.getElementById('signup-submit-btn');
+
+      const mobile = mobileInput.value.trim();
+      const password = passwordInput.value;
+      const confirmPassword = confirmInput.value;
+
+      // Validation
+      if (!mobile || !/^\d{10}$/.test(mobile)) {
+        showError('सही 10 अंकों का मोबाइल नंबर डालें');
+        mobileInput.focus();
+        return;
+      }
+
+      if (!password) {
+        showError('कृपया पासवर्ड दर्ज करें');
+        passwordInput.focus();
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showError('दोनों पासवर्ड एक जैसे होने चाहिए');
+        confirmInput.focus();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '⏳ खाता बन रहा है...';
+
+      try {
+        const result = await signup(mobile, password, confirmPassword);
+
+        const params = new URLSearchParams(window.location.search);
+        const redirectParam = params.get('redirect');
+
+        if (result.already_existed) {
+          // SPECIAL REQUIREMENT: Existing account with matching credentials
+          showSuccess('आपका खाता पहले से मौजूद है। आपको लॉगिन कर दिया गया है।');
+          showToast('खाता है! लॉगिन हो गया।', 'success');
+        } else {
+          showSuccess('खाता बन गया!');
+          showToast('खाता बन गया! शाबाश!', 'success');
+        }
+
+        setTimeout(() => {
+          if (redirectParam && !redirectParam.includes('admin') && !redirectParam.includes('login') && !redirectParam.includes('signup')) {
+            window.location.href = redirectParam;
+          } else {
+            window.location.href = 'index.html';
+          }
+        }, 600);
+
+      } catch(err) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '✅ खाता बनाएं';
+
+        if (err.code === 'user_already_exists') {
+          // Mobile exists but password mismatch
+          showError('यह मोबाइल नंबर पहले से पंजीकृत है। कृपया सही पासवर्ड से लॉगिन करें।', true);
+        } else {
+          showError(err.message || 'खाता बनाने में समस्या आई');
+        }
+      }
+    }
+
+    // Preserve redirect param on login link
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const redirectParam = params.get('redirect');
+      if (redirectParam) {
+        const loginLink = document.getElementById('login-link');
+        if (loginLink) {
+          loginLink.href = `login.html?redirect=${encodeURIComponent(redirectParam)}`;
+        }
+      }
+
+      // If already logged in, redirect appropriately
+      if (isAuthenticated()) {
+        if (isAdmin()) {
+          window.location.href = 'admin.html';
+        } else if (redirectParam) {
+          window.location.href = redirectParam;
+        } else {
+          window.location.href = 'index.html';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

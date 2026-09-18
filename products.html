@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>पशु आहार उत्पाद | स्वर्णी पशु आहार</title>
+  <meta name="description" content="स्वर्णी पशु आहार के सभी उत्पाद - सुपर, सिल्वर और अन्य पशु आहार। होम डिलीवरी उपलब्ध।">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo"><div class="nav-logo-icon">🌾</div><div class="nav-logo-text"><span class="nav-logo-name hindi">स्वर्णी पशु आहार</span><span class="nav-logo-sub">Swarni Pashu Aahar</span></div></a>
+      <div class="nav-menu">
+        <a href="index.html" class="nav-link hindi">होम</a>
+        <a href="products.html" class="nav-link hindi active">पशु आहार</a>
+        <a href="services.html" class="nav-link hindi">कृषि सेवाएं</a>
+        <a href="gallery.html" class="nav-link hindi">गैलरी</a>
+        <a href="contact.html" class="nav-link hindi">संपर्क</a>
+      </div>
+      <div class="nav-actions">
+        <a href="cart.html" class="nav-btn btn-cart" style="position:relative;">🛒 <span>कार्ट</span><span class="cart-badge" style="display:none;">0</span></a>
+        
+        
+      </div>
+      <button class="hamburger" id="hamburger-btn"><span></span><span></span><span></span></button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html" class="nav-link hindi">🏠 होम</a>
+      <a href="products.html" class="nav-link hindi">🐄 पशु आहार</a>
+      <a href="services.html" class="nav-link hindi">⚙️ सेवाएं</a>
+      <a href="contact.html" class="nav-link hindi">📞 संपर्क</a>
+      <div class="mobile-menu-actions">
+        <a href="cart.html" class="btn btn-primary btn-full hindi">🛒 कार्ट</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-header-title hindi">पशु आहार</h1>
+      <div class="page-header-breadcrumb"><a href="index.html" class="hindi">होम</a><span>›</span><span class="hindi">सामान</span></div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <!-- Search & Filter Bar -->
+      <div style="display:flex;gap:var(--space-md);margin-bottom:var(--space-xl);flex-wrap:wrap;align-items:center;">
+        <div class="search-bar" style="flex:1;min-width:200px;">
+          <span>🔍</span>
+          <input type="text" id="product-search" placeholder="सामान ढूंढें..." oninput="filterBySearch(this.value)" aria-label="Search products">
+        </div>
+        <select class="form-control" style="width:auto;" id="sort-select" onchange="currentFilters.sort=this.value;applyFilters()">
+          <option value="default">क्रम: डिफ़ॉल्ट</option>
+          <option value="price-asc">सस्ता पहले</option>
+          <option value="price-desc">महंगा पहले</option>
+          <option value="featured">खास सामान</option>
+          <option value="name">नाम A-Z</option>
+        </select>
+        <span id="products-count" class="text-muted hindi" style="white-space:nowrap;"></span>
+      </div>
+
+      <!-- Category Filters -->
+      <div class="filter-tabs" id="category-filters">
+        <button class="filter-tab active hindi" data-cat="">सभी सामान</button>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="products-grid" class="grid-4"></div>
+    </div>
+  </section>
+
+  <!-- Product Detail Modal -->
+  <div class="modal-overlay" id="product-modal-overlay">
+    <div class="modal" style="max-width:700px;">
+      <div class="modal-header"><h3 class="modal-title hindi">सामान की जानकारी</h3><button class="modal-close" onclick="closeModal('product-modal-overlay')">&times;</button></div>
+      <div class="modal-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-lg);">
+          <img id="modal-product-image" src="" alt="" style="width:100%;height:260px;object-fit:cover;border-radius:var(--radius-lg);" onerror="this.src='assets/images/product-super-feed.jpg'">
+          <div>
+            <h3 id="modal-product-name" style="color:var(--dark-green);margin-bottom:4px;"></h3>
+            <p id="modal-product-name-hi" class="hindi" style="color:var(--light-text);margin-bottom:var(--space-md);"></p>
+            <div style="font-size:1.6rem;font-weight:900;color:var(--primary-green);margin-bottom:var(--space-sm);" id="modal-product-price"></div>
+            <div id="modal-product-stock" class="product-card-stock" style="margin-bottom:var(--space-sm);"></div>
+            <div style="display:flex;gap:4px;align-items:center;margin-bottom:var(--space-sm);"><span style="font-size:0.8rem;color:var(--light-text);">वजन:</span><span id="modal-product-weight" style="font-weight:700;font-size:0.85rem;"></span></div>
+            <div class="quantity-selector" style="margin-bottom:var(--space-sm);">
+              <button class="qty-btn" onclick="stepModalQty(-1)">−</button>
+              <input type="number" class="qty-input" id="modal-qty" value="1" min="1" oninput="calculateModalTotal()">
+              <button class="qty-btn" onclick="stepModalQty(1)">+</button>
+            </div>
+            <div id="modal-product-total" class="hindi" style="font-size:1.1rem;font-weight:800;color:var(--primary-green);margin-bottom:var(--space-md);background:var(--soft-green);padding:6px 12px;border-radius:var(--radius-md);">कुल: ₹0</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <button id="modal-add-cart" class="btn btn-primary btn-full hindi">🛒 कार्ट में डालें</button>
+              <button id="modal-buy-now" class="btn btn-golden btn-full hindi">⚡ अभी खरीदें</button>
+              <a id="modal-whatsapp" href="#" target="_blank" class="btn btn-whatsapp btn-full hindi">💬 WhatsApp पर पूछें</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer"><div class="container"><div class="footer-bottom" style="border-top:none;padding-top:0;"><span class="hindi">© 2026 स्वर्णी पशु आहार</span><a href="index.html" class="footer-link" style="margin:0;color:rgba(255,255,255,0.5);">होम पर जाएं</a></div></div></footer>
+  <nav class="bottom-nav"><div class="bottom-nav-items"><a href="index.html" class="bottom-nav-item"><span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label hindi">होम</span></a><a href="products.html" class="bottom-nav-item active"><span class="bottom-nav-icon">🐄</span><span class="bottom-nav-label hindi">उत्पाद</span></a><a href="cart.html" class="bottom-nav-item"><span class="bottom-nav-icon">🛒</span><span class="bottom-nav-label hindi">कार्ट</span></a><a href="booking.html" class="bottom-nav-item"><span class="bottom-nav-icon">⚙️</span><span class="bottom-nav-label hindi">बुकिंग</span></a>
+      <a href="https://wa.me/918120860801" class="bottom-nav-item"><span class="bottom-nav-icon" style="color:#25D366;">💬</span><span class="bottom-nav-label hindi">WA</span></a>
+      <a href="tel:8120860801" class="bottom-nav-item"><span class="bottom-nav-icon" style="color:var(--dark-green);">📞</span><span class="bottom-nav-label hindi">कॉल</span></a></div></nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/products.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { initNavbar(); loadProductsPage(); });</script>
+</body>
+</html>
