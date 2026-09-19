@@ -15,16 +15,32 @@ function withTimeout(promise, timeoutMs = DB_TIMEOUT_MS) {
   ]);
 }
 
+function isSupabaseConfigured() {
+  if (typeof window.supabase === 'undefined') return false;
+  if (!window.SUPABASE_URL || typeof window.SUPABASE_URL !== 'string') return false;
+  if (!window.SUPABASE_ANON_KEY || typeof window.SUPABASE_ANON_KEY !== 'string') return false;
+  if (window.SUPABASE_URL === 'YOUR_SUPABASE_PROJECT_URL' || window.SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY') return false;
+
+  try {
+    const parsed = new URL(window.SUPABASE_URL);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch (e) {
+    return false;
+  }
+}
+
 function getSupabase() {
   if (!_supabase) {
-    if (typeof window.supabase === 'undefined') {
-      console.error('Supabase library not loaded from CDN');
-      throw new Error('Supabase client library not loaded');
+    if (typeof window.IS_DEV !== 'undefined' && window.IS_DEV) {
+      console.log('Supabase URL configured:', Boolean(window.SUPABASE_URL && window.SUPABASE_URL.trim() !== ''));
+      console.log('Supabase anon key configured:', Boolean(window.SUPABASE_ANON_KEY && window.SUPABASE_ANON_KEY.trim() !== ''));
     }
-    if (!window.SUPABASE_URL || !window.SUPABASE_URL.startsWith('https://')) {
-      console.error('Supabase URL is missing or invalid:', window.SUPABASE_URL);
+
+    if (!isSupabaseConfigured()) {
+      console.error('Supabase URL/Key missing or invalid format. URL:', window.SUPABASE_URL);
       throw new Error('डेटाबेस की सेटिंग पूरी नहीं है।');
     }
+
     _supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
   }
   return _supabase;
@@ -73,6 +89,10 @@ async function getCategories(activeOnly = true) {
   if (activeOnly) query = query.eq('is_active', true);
   const { data, error } = await withTimeout(query);
   if (error) {
+    if (error.code === 'PGRST205') {
+      console.warn('⚠️ Table categories does not exist yet. Run supabase/schema.sql in Supabase SQL Editor.');
+      return [];
+    }
     console.error('Categories error:', error);
     throw error;
   }
@@ -130,6 +150,10 @@ async function getProducts({ categoryId, search, featured, activeOnly = true, li
 
   const { data, error } = await withTimeout(query);
   if (error) {
+    if (error.code === 'PGRST205') {
+      console.warn('⚠️ Table products does not exist yet. Run supabase/schema.sql in Supabase SQL Editor.');
+      return [];
+    }
     console.error('Products error from Supabase:', error);
     throw error;
   }
@@ -184,6 +208,10 @@ async function getServices(activeOnly = true) {
   }
   const { data, error } = await withTimeout(query);
   if (error) {
+    if (error.code === 'PGRST205') {
+      console.warn('⚠️ Table services does not exist yet. Run supabase/schema.sql in Supabase SQL Editor.');
+      return [];
+    }
     console.error('Services error from Supabase:', error);
     throw error;
   }

@@ -87,6 +87,8 @@ function showAddSlotForm() {
 async function loadAdminSlotsView() {
   const serviceId = document.getElementById('slot-service-filter')?.value;
   const date = document.getElementById('slot-date-filter')?.value;
+  const container = document.getElementById('slots-view-container');
+  if (!container) return;
   container.innerHTML = '<div style="text-align:center;padding:16px;"><div class="loading-spinner loading-spinner-sm" style="margin:0 auto 8px;"></div><p class="hindi text-muted" style="font-size:0.85rem;margin:0;">स्लॉट लोड हो रहे हैं...</p></div>';
   
   try {
@@ -139,7 +141,8 @@ async function loadAdminSlotsView() {
     console.error('loadAdminSlotsView error:', e);
     container.innerHTML = '<p class="hindi" style="padding:16px;">लोड में समस्या।</p>';
   }
-}
+
+
 
 async function addAdminSlot(event) {
   event.preventDefault();

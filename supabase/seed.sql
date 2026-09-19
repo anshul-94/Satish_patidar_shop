@@ -12,11 +12,13 @@
 -- 1. BUSINESS SETTINGS (Default row)
 -- =============================================
 INSERT INTO public.business_settings (
+  id,
   business_name, business_name_hi, tagline_hi, tagline2_hi,
   owner_name, phone, whatsapp, address, village,
   delivery_available, delivery_charge, minimum_order,
   service_area, opening_time, closing_time
 ) VALUES (
+  'b0000000-0000-0000-0000-000000000001',
   'Swarni Pashu Aahar', 'स्वर्णी पशु आहार',
   'पशुओं के स्वास्थ्य एवं बेहतर उत्पादन के लिए उत्तम गुणवत्ता वाला आहार',
   'स्वस्थ पशु - समृद्ध किसान',
@@ -25,7 +27,7 @@ INSERT INTO public.business_settings (
   true, 50.00, 200.00,
   'खरदोन कलां और आसपास के क्षेत्र', '08:00', '20:00'
 )
-ON CONFLICT DO NOTHING;
+ON CONFLICT (id) DO NOTHING;
 
 -- =============================================
 -- 2. CATEGORIES

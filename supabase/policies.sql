@@ -130,7 +130,8 @@ CREATE POLICY "service_slots_insert"
 
 CREATE POLICY "service_slots_update"
   ON public.service_slots FOR UPDATE
-  USING (public.is_admin());
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
 CREATE POLICY "service_slots_delete"
   ON public.service_slots FOR DELETE

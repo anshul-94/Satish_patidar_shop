@@ -318,12 +318,12 @@ async function renderAdminSettings() {
 
           <div class="form-group">
             <label class="form-label hindi">फ़ोन नंबर</label>
-            <input class="form-control" name="phone_primary" value="${escapeHtml(settings.phone_primary || '8120860801')}" required>
+            <input class="form-control" name="phone" value="${escapeHtml(settings.phone || '8120860801')}" required>
           </div>
 
           <div class="form-group">
             <label class="form-label hindi">पता (हिंदी)</label>
-            <textarea class="form-control" name="address_hi" rows="2">${escapeHtml(settings.address_hi || 'कुरावर रोड, अजय ऑनलाइन के पास, खरदोन कलां')}</textarea>
+            <textarea class="form-control" name="address" rows="2">${escapeHtml(settings.address || 'कुरावर रोड, अजय ऑनलाइन के पास, खरदोन कलां')}</textarea>
           </div>
 
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -366,8 +366,8 @@ async function saveBusinessSettings(event) {
   const data = {
     business_name_hi: form.business_name_hi.value.trim(),
     owner_name: form.owner_name.value.trim(),
-    phone_primary: form.phone_primary.value.trim(),
-    address_hi: form.address_hi.value.trim(),
+    phone: form.phone.value.trim(),
+    address: form.address.value.trim(),
     delivery_charge: parseFloat(form.delivery_charge.value) || 0,
     minimum_order: parseFloat(form.minimum_order.value) || 0,
     delivery_available: form.delivery_available.checked,

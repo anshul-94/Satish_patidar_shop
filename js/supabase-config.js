@@ -12,5 +12,5 @@
 // ❌ NEVER commit real keys to a public GitHub repository.
 // =============================================
 
-window.SUPABASE_URL = "";
-window.SUPABASE_ANON_KEY = "";
+window.SUPABASE_URL = "https://oqtjcgguuqzmiuyrcsod.supabase.co";
+window.SUPABASE_ANON_KEY = "sb_publishable_0M_MfyZqn6DdK-9ELKicMg_hoslXJIj";
