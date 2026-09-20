@@ -341,3 +341,44 @@ async function submitBooking(event) {
     showToast('बुकिंग में समस्या: ' + (e.message || 'नेटवर्क समस्या'), 'error');
   }
 }
+
+function renderBookingSuccess() {
+  const container = document.getElementById('booking-success-content');
+  if (!container) return;
+
+  const bookingNumber = localStorage.getItem('last_booking_number') || 'BK-SUCCESS';
+  const serviceName   = localStorage.getItem('last_booking_service') || 'मशीन ग्रेडिंग सेवा';
+  const date          = localStorage.getItem('last_booking_date') || '';
+  const time          = localStorage.getItem('last_booking_time') || '';
+  const village       = localStorage.getItem('last_booking_village') || '';
+  const qty           = localStorage.getItem('last_booking_qty') || '';
+
+  container.innerHTML = `
+    <div class="card-body" style="padding:28px 20px;text-align:center;">
+      <div style="width:64px;height:64px;background:var(--soft-green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px;">
+        ✅
+      </div>
+      <h2 class="hindi" style="color:var(--dark-green);margin:0 0 6px;">बुकिंग सफल हुई!</h2>
+      <p class="hindi text-muted" style="margin:0 0 20px;font-size:0.95rem;">आपकी सेवा बुकिंग सफलतापूर्वक दर्ज हो गई है।</p>
+      
+      <div style="background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;text-align:left;margin-bottom:20px;line-height:1.8;" class="hindi">
+        <div><strong>बुकिंग नंबर:</strong> #${escapeHtml(bookingNumber)}</div>
+        <div><strong>सेवा:</strong> ${escapeHtml(serviceName)}</div>
+        ${qty ? `<div><strong>मात्रा:</strong> ${escapeHtml(qty)}</div>` : ''}
+        ${date ? `<div><strong>तारीख:</strong> ${escapeHtml(date)}</div>` : ''}
+        ${time ? `<div><strong>समय:</strong> ${escapeHtml(time)}</div>` : ''}
+        ${village ? `<div><strong>स्थान/गाँव:</strong> ${escapeHtml(village)}</div>` : ''}
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="https://wa.me/918120860801?text=${encodeURIComponent('नमस्ते, मेरी बुकिंग #' + bookingNumber + ' (' + serviceName + ') की पुष्टि करें।')}" class="btn btn-whatsapp btn-full hindi" target="_blank">
+          💬 WhatsApp पर पूछें
+        </a>
+        <a href="index.html" class="btn btn-primary btn-full hindi">
+          🏠 होम पेज पर जाएं
+        </a>
+      </div>
+    </div>
+  `;
+}
+window.renderBookingSuccess = renderBookingSuccess;

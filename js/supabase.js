@@ -395,9 +395,11 @@ async function createBookingAtomic(params) {
 
 async function createBooking(params) {
   const sb = getSupabase();
+  const currentUser = getCurrentUser();
   const bookingNumber = 'BK-' + Date.now().toString().slice(-8);
   const bookingData = {
     booking_number: bookingNumber,
+    user_id: params.user_id || (currentUser ? currentUser.id : null),
     service_id: params.serviceId || null,
     slot_id: params.slotId || null,
     service_name_snapshot: params.serviceName || '',
