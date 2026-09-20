@@ -121,11 +121,11 @@ async function login(identifier, password) {
 // SIGNUP (Farmer only — mobile + password)
 // -------------------------------------------
 async function signup(mobile, password, confirmPassword) {
-  mobile          = (mobile          || '').trim();
-  password        = (password        || '').trim();
-  confirmPassword = (confirmPassword || '').trim();
+  const cleanMobile = (mobile || '').trim().replace(/\D/g, '');
+  password          = (password        || '').trim();
+  confirmPassword   = (confirmPassword || '').trim();
 
-  if (!mobile || !/^\d{10}$/.test(mobile)) {
+  if (!cleanMobile || !/^\d{10}$/.test(cleanMobile)) {
     throw new Error('सही 10 अंकों का मोबाइल नंबर डालें');
   }
   if (!password || password.length < 6) {
@@ -135,67 +135,89 @@ async function signup(mobile, password, confirmPassword) {
     throw new Error('दोनों पासवर्ड एक जैसे होने चाहिए');
   }
 
-  const email = mobileToEmail(mobile);
+  const email = mobileToEmail(cleanMobile);
+  const sb = getSupabase();
+
+  let signupData = null;
+  let signupError = null;
 
   try {
-    const sb = getSupabase();
-
-    // Try to sign up
-    const { data: signupData, error: signupError } = await sb.auth.signUp({
+    const res = await sb.auth.signUp({
       email,
       password,
       options: {
-        data: { mobile, role: 'farmer' },
+        data: { mobile: cleanMobile, role: 'farmer' },
         emailRedirectTo: undefined,
       }
     });
+    signupData = res.data;
+    signupError = res.error;
+  } catch(e) {
+    signupError = e;
+  }
 
-    // If user already exists, try login instead
-    if (signupError) {
-      if (signupError.message?.toLowerCase().includes('already registered') ||
-          signupError.message?.toLowerCase().includes('user already registered')) {
-        // Attempt login with given credentials
-        const loginResult = await login(mobile, password);
+  if (signupError) {
+    console.error('FARMER SIGNUP ERROR:', signupError);
+    console.error('MESSAGE:', signupError.message);
+    console.error('STATUS:', signupError.status);
+    console.error('CODE:', signupError.code || signupError.error_code);
+
+    const errMsg = (signupError.message || '').toLowerCase();
+    const errCode = (signupError.code || signupError.error_code || '').toLowerCase();
+
+    // 1. User already registered / duplicate mobile account
+    if (errMsg.includes('already registered') || errMsg.includes('already exists') || errCode === 'user_already_exists' || signupError.status === 422) {
+      try {
+        const loginResult = await login(cleanMobile, password);
         return { ...loginResult, already_existed: true };
+      } catch(loginErr) {
+        const customErr = new Error('यह मोबाइल नंबर पहले से पंजीकृत है। कृपया सही पासवर्ड से लॉगिन करें।');
+        customErr.code = 'user_already_exists';
+        throw customErr;
       }
-      console.error('Signup error:', signupError);
-      throw new Error('खाता नहीं बन पाया। दोबारा कोशिश करें।');
     }
 
-    // Supabase may return session immediately (email confirm disabled) or require confirm
-    if (signupData?.session) {
-      const userObj = {
-        id:     signupData.user.id,
-        email:  signupData.user.email,
-        mobile: mobile,
-        role:   'farmer',
-      };
-      _saveSession(userObj);
-      if (signupData.session?.access_token) {
-        localStorage.setItem('swarni_token', signupData.session.access_token);
+    // 2. Email send rate limit (HTTP 429) fallback
+    if (errMsg.includes('rate limit') || errCode === 'over_email_send_rate_limit' || signupError.status === 429) {
+      try {
+        const loginResult = await login(cleanMobile, password);
+        return { ...loginResult, already_existed: true };
+      } catch(loginErr) {
+        throw new Error('खाता बन गया है या सर्वर व्यस्त है। कृपया सीधे लॉगिन करें।');
       }
-      return { ...userObj, already_existed: false };
     }
 
-    // No session yet (email confirm mode — shouldn't happen with phone-based flow)
-    // Try to immediately log in
-    try {
-      const loginResult = await login(mobile, password);
-      return { ...loginResult, already_existed: false };
-    } catch(loginErr) {
-      // Account created but can't log in yet
-      return {
-        id: signupData?.user?.id || null,
-        mobile,
-        role: 'farmer',
-        already_existed: false,
-        needs_confirm: true,
-      };
-    }
+    // 3. Other auth error
+    throw new Error(signupError.message || 'खाता नहीं बन पाया। दोबारा कोशिश करें।');
+  }
 
-  } catch(err) {
-    if (err.message && !err.message.includes('Supabase')) throw err;
-    throw new Error('खाता नहीं बन पाया। इंटरनेट चेक करें।');
+  // Handle successful signup session
+  if (signupData?.session) {
+    const userObj = {
+      id:     signupData.user.id,
+      email:  signupData.user.email,
+      mobile: cleanMobile,
+      role:   'farmer',
+    };
+    _saveSession(userObj);
+    if (signupData.session?.access_token) {
+      localStorage.setItem('swarni_token', signupData.session.access_token);
+    }
+    return { ...userObj, already_existed: false };
+  }
+
+  // Fallback: try immediate login if session was not attached (e.g. email confirmation mode)
+  try {
+    const loginResult = await login(cleanMobile, password);
+    return { ...loginResult, already_existed: false };
+  } catch(loginErr) {
+    return {
+      id: signupData?.user?.id || null,
+      mobile: cleanMobile,
+      role: 'farmer',
+      already_existed: false,
+      needs_confirm: true,
+    };
   }
 }
 
