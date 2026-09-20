@@ -334,6 +334,16 @@ body.admin-body {
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.1s, border-color 0.15s;
+}
+
+.admin-stat-card:active {
+  transform: scale(0.98);
+  border-color: var(--primary-green);
 }
 
 .admin-stat-card-header {

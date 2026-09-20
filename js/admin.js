@@ -179,37 +179,37 @@ async function renderAdminDashboard() {
 
       <!-- Compact 2-Column Stats Grid -->
       <div class="admin-stats-grid">
-        <div class="admin-stat-card">
+        <a href="admin.html?page=orders" class="admin-stat-card">
           <div class="admin-stat-card-header">
             <div class="admin-stat-icon" style="background:#EFF6FF;">🛒</div>
             <div class="admin-stat-label">Orders</div>
           </div>
           <div class="admin-stat-value">${stats.totalOrders}</div>
-        </div>
+        </a>
 
-        <div class="admin-stat-card">
+        <a href="admin.html?page=bookings" class="admin-stat-card">
           <div class="admin-stat-card-header">
             <div class="admin-stat-icon" style="background:#FFFBEB;">📅</div>
             <div class="admin-stat-label">Bookings</div>
           </div>
           <div class="admin-stat-value">${stats.pendingBookings + stats.todayBookings}</div>
-        </div>
+        </a>
 
-        <div class="admin-stat-card">
+        <a href="admin.html?page=products" class="admin-stat-card">
           <div class="admin-stat-card-header">
             <div class="admin-stat-icon" style="background:#F0FDF4;">📦</div>
             <div class="admin-stat-label">Products</div>
           </div>
           <div class="admin-stat-value">${stats.activeProducts}</div>
-        </div>
+        </a>
 
-        <div class="admin-stat-card">
+        <a href="admin.html?page=services" class="admin-stat-card">
           <div class="admin-stat-card-header">
             <div class="admin-stat-icon" style="background:#FAF5FF;">⚙️</div>
             <div class="admin-stat-label">Services</div>
           </div>
           <div class="admin-stat-value">${stats.activeServices}</div>
-        </div>
+        </a>
       </div>
 
       <!-- Quick Actions Section -->
