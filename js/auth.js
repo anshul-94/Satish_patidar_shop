@@ -83,12 +83,10 @@ async function login(identifier, password) {
 
     if (error) {
       console.error('Supabase auth error:', error);
-      if (error.message?.toLowerCase().includes('invalid login credentials') ||
-          error.message?.toLowerCase().includes('email not confirmed') ||
-          error.code === 'invalid_credentials') {
-        throw new Error('मोबाइल नंबर या पासवर्ड सही नहीं है');
-      }
-      throw new Error('इंटरनेट में दिक्कत है। दोबारा कोशिश करें।');
+      console.error('MESSAGE:', error.message);
+      console.error('STATUS:', error.status);
+      console.error('CODE:', error.code || error.error_code);
+      throw new Error('पासवर्ड गलत है।');
     }
 
     const supaUser = data.user;
@@ -110,10 +108,10 @@ async function login(identifier, password) {
     return userObj;
 
   } catch(err) {
-    if (err.message && !err.message.includes('Supabase')) {
-      throw err; // our own translated errors
+    if (err.message && !err.message.toLowerCase().includes('supabase') && !err.message.toLowerCase().includes('fetch')) {
+      throw err;
     }
-    throw new Error('लॉगिन नहीं हो पाया। इंटरनेट चेक करें।');
+    throw new Error('पासवर्ड गलत है।');
   }
 }
 
@@ -241,7 +239,7 @@ async function signOut() {
 function requireAuth(redirectUrl) {
   if (!isAuthenticated()) {
     const target = redirectUrl || (window.location.pathname.split('/').pop() || 'index.html');
-    window.location.href = `login.html?redirect=${encodeURIComponent(target)}`;
+    window.location.href = `signup.html?redirect=${encodeURIComponent(target)}`;
     return null;
   }
   return getCurrentUser();

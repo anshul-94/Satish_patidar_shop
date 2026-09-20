@@ -4,7 +4,7 @@
 
 async function initCheckoutPage() {
   if (!isAuthenticated()) {
-    window.location.href = 'login.html?redirect=checkout.html';
+    window.location.href = 'signup.html?redirect=checkout.html';
     return;
   }
   const user = getCurrentUser();
@@ -72,7 +72,7 @@ function renderCheckoutSummary() {
 async function submitOrder(event) {
   event.preventDefault();
   if (!isAuthenticated()) {
-    window.location.href = 'login.html?redirect=checkout.html';
+    window.location.href = 'signup.html?redirect=checkout.html';
     return;
   }
   const currentUser = getCurrentUser();

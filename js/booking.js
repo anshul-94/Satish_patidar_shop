@@ -260,9 +260,9 @@ async function submitBooking(event) {
       slotId: activeSlot ? activeSlot.id : null,
     };
     localStorage.setItem('swarni_draft_booking', JSON.stringify(draftBooking));
-    showToast('बुकिंग के लिए पहले लॉगिन करें', 'info');
+    showToast('बुकिंग के लिए खाता बनाएं या लॉगिन करें', 'info');
     setTimeout(() => {
-      window.location.href = 'login.html?redirect=booking.html';
+      window.location.href = 'signup.html?redirect=booking.html';
     }, 350);
     return;
   }
