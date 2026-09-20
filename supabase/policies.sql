@@ -6,6 +6,12 @@
 -- Run BEFORE or AFTER seed.sql (order doesn't matter for policies)
 -- =============================================
 
+-- Grant table privileges to anon and authenticated roles (RLS will enforce access control)
+GRANT USAGE ON SCHEMA public TO anon, authenticated;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;
+GRANT ALL ON ALL ROUTINES IN SCHEMA public TO anon, authenticated;
+
 -- Enable RLS on all tables
 ALTER TABLE public.profiles          ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.admin_profiles    ENABLE ROW LEVEL SECURITY;
