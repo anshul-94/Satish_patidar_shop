@@ -28,7 +28,7 @@ function renderMobileImagePickerHTML({
 
   return `
     <div class="mobile-image-picker" id="${id}-wrapper" data-folder="${folder}" data-fallback="${defaultFallback}">
-      <input type="file" id="${id}-input" accept="image/*" capture="environment"
+      <input type="file" id="${id}-input" accept="image/*"
              style="display:none;" onchange="handleImageSelection(this, '${id}', '${folder}')">
       <input type="hidden" id="${id}-url" value="${escapeHtml(currentImageUrl || '')}">
 

@@ -13,7 +13,21 @@ async function initCheckoutPage() {
     if (phoneInput && !phoneInput.value) {
       phoneInput.value = user.mobile;
     }
+    const nameInput = document.getElementById('checkout-name');
+    if (nameInput && !nameInput.value) {
+      nameInput.value = user.full_name || localStorage.getItem('swarni_farmer_name') || '';
+    }
   }
+
+  // Autofill saved address details if available
+  const villageInput = document.getElementById('checkout-village');
+  if (villageInput && !villageInput.value) villageInput.value = (user && user.village) || localStorage.getItem('swarni_farmer_village') || '';
+
+  const landmarkInput = document.getElementById('checkout-landmark');
+  if (landmarkInput && !landmarkInput.value) landmarkInput.value = localStorage.getItem('swarni_farmer_landmark') || '';
+
+  const addressInput = document.getElementById('checkout-address');
+  if (addressInput && !addressInput.value) addressInput.value = (user && user.address) || localStorage.getItem('swarni_farmer_address') || '';
 
   const cart = getCart();
   if (cart.length === 0) {
@@ -101,6 +115,12 @@ async function submitOrder(event) {
     const newOrder = await createOrder(orderData, orderItems);
     clearCart();
     showToast('ओर्डर हो गया! हम जल्द संपर्क करेंगे।', 'success');
+
+    // Save farmer contact/address info for reuse in future bookings and checkouts
+    if (orderData.customer_name) localStorage.setItem('swarni_farmer_name', orderData.customer_name);
+    if (orderData.delivery_village_city) localStorage.setItem('swarni_farmer_village', orderData.delivery_village_city);
+    if (orderData.delivery_landmark) localStorage.setItem('swarni_farmer_landmark', orderData.delivery_landmark);
+    if (orderData.delivery_full_address) localStorage.setItem('swarni_farmer_address', orderData.delivery_full_address);
     
     const savedOrders = JSON.parse(localStorage.getItem('saved_orders') || '[]');
     savedOrders.push({ id: newOrder.id, number: newOrder.order_number, date: new Date().toISOString() });
